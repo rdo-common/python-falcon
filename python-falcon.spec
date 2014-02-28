@@ -3,7 +3,7 @@
 %endif
 
 Name:           python-falcon
-Version:        0.1.7
+Version:        0.1.8
 Release:        1%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 
@@ -11,8 +11,6 @@ License:        ASL 2.0
 Group:          Development/Libraries
 URL:            http://falconframework.org
 Source0:        https://pypi.python.org/packages/source/f/falcon/falcon-%{version}.tar.gz
-Patch0:         0001-Make-loading-description-python-independent.patch
-Patch1:         0002-Add-output-encoding-to-tests-for-Python3.patch
 
 Requires:       python-six
 Requires:       python-mimeparse
@@ -70,8 +68,6 @@ Features:
 
 %prep
 %setup -q -n falcon-%{version}
-%patch0 -p1
-%patch1 -p1
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -121,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 27 2014 Jamie Lennox <jamielennox@redhat.com> - 0.1.8-1
+- Bump to 0.1.8
+
 * Mon Sep 23 2013 Jamie Lennox <jamielennox@redhat.com> - 0.1.7-1
 - Add Python 3 packaging details and patch to fix for Python 3.
 - Remove falcon-bench from package.
