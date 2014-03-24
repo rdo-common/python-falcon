@@ -85,10 +85,12 @@ popd
 
 %install
 %{__python2} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT/%{python2_sitearch}/tests
 
 %if 0%{?with_python3}
 pushd %{py3dir}
 %{__python3} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT/%{python3_sitearch}/tests
 popd
 %endif
 
@@ -105,18 +107,22 @@ popd
 %endif
 
 %files
-%doc AUTHORS CHANGES.md LICENSE NOTES.md README.rst
+%doc README.rst
 %{python2_sitearch}/falcon
 %{python2_sitearch}/falcon-%{version}-py?.?.egg-info
 
 %if 0%{?with_python3}
 %files -n python3-falcon
-%doc AUTHORS CHANGES.md LICENSE NOTES.md README.rst
+%doc README.rst
 %{python3_sitearch}/falcon
 %{python3_sitearch}/falcon-%{version}-py?.?.egg-info
 %endif
 
 %changelog
+* Mon Mar 24 2014 Jamie Lennox <jamielennox@redhat.com> - 0.1.8-2
+- Remove now missing doc files
+- Remove installed test files
+
 * Thu Feb 27 2014 Jamie Lennox <jamielennox@redhat.com> - 0.1.8-1
 - Bump to 0.1.8
 
