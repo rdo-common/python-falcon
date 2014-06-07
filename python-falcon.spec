@@ -4,7 +4,7 @@
 
 Name:           python-falcon
 Version:        0.1.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 
 License:        ASL 2.0
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.1.8-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Mon May 19 2014 Bohuslav Kabrda <bkabrda@redhat.com> - 0.1.8-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/Python_3.4
 
