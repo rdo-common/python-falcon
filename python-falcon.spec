@@ -1,10 +1,10 @@
-%if 0%{?fedora} > 12 || 0%{?rhel} > 6
+%if 0%{?fedora}
 %global with_python3 1
 %endif
 
 Name:           python-falcon
-Version:        0.1.8
-Release:        4%{?dist}
+Version:        0.1.10
+Release:        1%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 
 License:        ASL 2.0
@@ -119,6 +119,10 @@ popd
 %endif
 
 %changelog
+* Wed Nov 05 2014 Haïkel Guémar <hguemar@fedoraproject.org> - 0.1.10-5
+- Upstream 0.1.10
+- No python3 in EL7
+
 * Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.1.8-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
