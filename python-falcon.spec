@@ -1,10 +1,11 @@
 %if 0%{?fedora}
 %global with_python3 1
+%global _docdir_fmt %{name}
 %endif
 
 Name:           python-falcon
-Version:        0.1.10
-Release:        2%{?dist}
+Version:        0.3.0
+Release:        1%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 
 License:        ASL 2.0
@@ -12,113 +13,113 @@ Group:          Development/Libraries
 URL:            http://falconframework.org
 Source0:        https://pypi.python.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
-Requires:       python-six
-Requires:       python-mimeparse
+# https://github.com/falconry/falcon/pull/558
+Patch001:       001-fix_test_cookies.patch
 
-BuildRequires:  Cython
-BuildRequires:  python2-devel
-BuildRequires:  python-nose
-BuildRequires:  python-requests
+BuildRequires:  python-devel
 BuildRequires:  python-setuptools
-BuildRequires:  python-testtools
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+
 
 %description
 Falcon is a high-performance Python framework for building cloud APIs.
 It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
 
-Features:
-- Intuitive routing via URI templates and resource classes
-- Easy access to headers and bodies through request and response classes
-- Idiomatic HTTP error responses via a handy exception base class
-- DRY request processing using global, resource, and method hooks
-- Snappy unit testing through WSGI helpers and mocks
-- 20% speed boost when Cython is available
-- Python 2.6, Python 2.7, PyPy and Python 3.3 support
-- Speed, speed, and more speed!
+
+%package -n python2-falcon
+Summary:        A supersonic micro-framework for building cloud APIs
+BuildRequires:  Cython
+BuildRequires:  python-coverage
+BuildRequires:  python-ddt
+BuildRequires:  python-nose
+BuildRequires:  python-requests
+BuildRequires:  python-six
+BuildRequires:  python-testtools
+BuildRequires:  PyYAML
+Requires:       python-mimeparse
+Requires:       python-six
+%{?python_provide:%python_provide python2-falcon}
+
+
+%description -n python2-falcon
+Falcon is a high-performance Python framework for building cloud APIs.
+It encourages the REST architectural style, and tries to do as little as
+possible while remaining highly effective.
+
 
 %if 0%{?with_python3}
 %package -n python3-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
-Requires:       python3-mimeparse
-Requires:       python3-six
-
 BuildRequires:  python3-Cython
-BuildRequires:  python3-devel
+BuildRequires:  python3-coverage
+BuildRequires:  python3-ddt
 BuildRequires:  python3-nose
 BuildRequires:  python3-requests
-BuildRequires:  python3-setuptools
+BuildRequires:  python3-six
 BuildRequires:  python3-testtools
+BuildRequires:  python3-PyYAML
+Requires:       python3-mimeparse
+Requires:       python3-six
+%{?python_provide:%python_provide python3-falcon}
+
 
 %description -n python3-falcon
 Falcon is a high-performance Python framework for building cloud APIs.
 It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
-
-Features:
-- Intuitive routing via URI templates and resource classes
-- Easy access to headers and bodies through request and response classes
-- Idiomatic HTTP error responses via a handy exception base class
-- DRY request processing using global, resource, and method hooks
-- Snappy unit testing through WSGI helpers and mocks
-- 20% speed boost when Cython is available
-- Python 2.6, Python 2.7, PyPy and Python 3.3 support
-- Speed, speed, and more speed!
 %endif
+
 
 %prep
 %setup -q -n falcon-%{version}
+%patch001 -p1
 
-%if 0%{?with_python3}
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-%endif
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" %{__python2} setup.py build
-
+%{py2_build}
 %if 0%{?with_python3}
-pushd %{py3dir}
-CFLAGS="$RPM_OPT_FLAGS" %{__python3} setup.py build
-popd
+%{py3_build}
 %endif
 
-%install
-%{__python2} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
-rm -rf $RPM_BUILD_ROOT/%{python2_sitearch}/tests
 
+%install
+%{py2_install}
 %if 0%{?with_python3}
-pushd %{py3dir}
-%{__python3} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
-rm -rf $RPM_BUILD_ROOT/%{python3_sitearch}/tests
-popd
+%{py3_install}
 %endif
 
 # don't package the benchmark test
-rm $RPM_BUILD_ROOT/%{_bindir}/falcon-bench
+rm -f %{buildroot}/%{_bindir}/falcon-bench
+
 
 %check
-%{__python2} setup.py test
-
+nosetests-%{python2_version}
 %if 0%{?with_python3}
-pushd %{py3dir}
-%{__python3} setup.py test
-popd
+nosetests-%{python3_version}
 %endif
 
-%files
+
+%files -n python2-falcon
 %doc README.rst
-%{python2_sitearch}/falcon
-%{python2_sitearch}/falcon-%{version}-py?.?.egg-info
+%{python2_sitearch}/falcon*
 
 %if 0%{?with_python3}
 %files -n python3-falcon
 %doc README.rst
-%{python3_sitearch}/falcon
-%{python3_sitearch}/falcon-%{version}-py?.?.egg-info
+%{python3_sitearch}/falcon*
 %endif
 
+
 %changelog
+* Tue Sep 01 2015 Carl George <carl.george@rackspace.com> - 0.3.0-1
+- Upstream 0.3.0
+- Add patch1 to fix GH#558
+- Update to new packaging guidelines
+- Add new test suite dependencies
+- Call nosetests directly
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.1.10-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
