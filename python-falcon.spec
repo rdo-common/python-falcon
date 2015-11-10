@@ -5,7 +5,7 @@
 
 Name:           python-falcon
 Version:        0.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 
 License:        ASL 2.0
@@ -113,6 +113,9 @@ nosetests-%{python3_version}
 
 
 %changelog
+* Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.3.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
+
 * Tue Sep 01 2015 Carl George <carl.george@rackspace.com> - 0.3.0-1
 - Upstream 0.3.0
 - Add patch1 to fix GH#558
