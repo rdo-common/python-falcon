@@ -5,7 +5,7 @@
 
 Name:           python-falcon
 Version:        0.3.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 
 License:        ASL 2.0
@@ -13,8 +13,9 @@ Group:          Development/Libraries
 URL:            http://falconframework.org
 Source0:        https://pypi.python.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
+Patch001:       001-disable_coverage.patch
 # https://github.com/falconry/falcon/pull/558
-Patch001:       001-fix_test_cookies.patch
+Patch002:       002-fix_test_cookies.patch
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
@@ -31,7 +32,6 @@ possible while remaining highly effective.
 %package -n python2-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
 BuildRequires:  Cython
-BuildRequires:  python2-coverage
 BuildRequires:  python2-ddt
 BuildRequires:  python2-nose
 BuildRequires:  python2-requests
@@ -53,7 +53,6 @@ possible while remaining highly effective.
 %package -n python3-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
 BuildRequires:  python3-Cython
-BuildRequires:  python3-coverage
 BuildRequires:  python3-ddt
 BuildRequires:  python3-nose
 BuildRequires:  python3-requests
@@ -75,6 +74,7 @@ possible while remaining highly effective.
 %prep
 %setup -q -n falcon-%{version}
 %patch001 -p1
+%patch002 -p1
 
 
 %build
@@ -105,6 +105,7 @@ nosetests-%{python3_version}
 %doc README.rst
 %{python2_sitearch}/falcon*
 
+
 %if 0%{?with_python3}
 %files -n python3-falcon
 %doc README.rst
@@ -113,6 +114,9 @@ nosetests-%{python3_version}
 
 
 %changelog
+* Mon Nov 16 2015 Carl George <carl.george@rackspace.com> - 0.3.0-3
+- Add patch to disable coverage
+
 * Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.3.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
 

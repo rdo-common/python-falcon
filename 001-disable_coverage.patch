@@ -1,0 +1,16 @@
+diff -Naurp a/setup.cfg b/setup.cfg
+--- a/setup.cfg	2015-05-19 17:32:08.000000000 -0500
++++ b/setup.cfg	2015-11-16 14:46:46.683421897 -0600
+@@ -9,12 +9,3 @@ universal = 1
+ [nosetests]
+ where = tests
+ verbosity = 2
+-with-coverage = true
+-cover-min-percentage = 100
+-cover-package = falcon
+-cover-html = true
+-cover-html-dir = htmlcov
+-cover-erase = true
+-cover-inclusive = true
+-cover-branches = true
+-
