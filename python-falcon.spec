@@ -7,9 +7,7 @@ Name:           python-falcon
 Version:        0.3.0
 Release:        3%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
-
 License:        ASL 2.0
-Group:          Development/Libraries
 URL:            http://falconframework.org
 Source0:        https://pypi.python.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
