@@ -19,8 +19,22 @@ Patch003:       003-skip_test_request_cookie_parsing.patch
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
+BuildRequires:  python2-ddt
+BuildRequires:  python2-nose
+BuildRequires:  python2-requests
+BuildRequires:  python2-six
+BuildRequires:  python2-testtools
+BuildRequires:  python2-yaml
+BuildRequires:  Cython
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python3-ddt
+BuildRequires:  python3-nose
+BuildRequires:  python3-requests
+BuildRequires:  python3-six
+BuildRequires:  python3-testtools
+BuildRequires:  python3-PyYAML
+BuildRequires:  python3-Cython
 
 
 %description
@@ -31,13 +45,6 @@ possible while remaining highly effective.
 
 %package -n python2-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
-BuildRequires:  Cython
-BuildRequires:  python2-ddt
-BuildRequires:  python2-nose
-BuildRequires:  python2-requests
-BuildRequires:  python2-six
-BuildRequires:  python2-testtools
-BuildRequires:  PyYAML
 Requires:       python2-mimeparse
 Requires:       python2-six
 %{?python_provide:%python_provide python2-falcon}
@@ -52,13 +59,6 @@ possible while remaining highly effective.
 %if 0%{?with_python3}
 %package -n python3-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
-BuildRequires:  python3-Cython
-BuildRequires:  python3-ddt
-BuildRequires:  python3-nose
-BuildRequires:  python3-requests
-BuildRequires:  python3-six
-BuildRequires:  python3-testtools
-BuildRequires:  python3-PyYAML
 Requires:       python3-mimeparse
 Requires:       python3-six
 %{?python_provide:%python_provide python3-falcon}
