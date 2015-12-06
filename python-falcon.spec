@@ -1,5 +1,5 @@
 %if 0%{?fedora}
-%global with_python3 1
+%bcond_without python3
 %global _docdir_fmt %{name}
 %endif
 
@@ -26,6 +26,8 @@ BuildRequires:  python2-six >= 1.4.0
 BuildRequires:  python2-testtools
 BuildRequires:  python2-yaml
 BuildRequires:  Cython
+
+%if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-ddt
@@ -35,6 +37,7 @@ BuildRequires:  python3-six
 BuildRequires:  python3-testtools
 BuildRequires:  python3-PyYAML
 BuildRequires:  python3-Cython
+%endif
 
 
 %description
@@ -56,7 +59,7 @@ It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
 
 
-%if 0%{?with_python3}
+%if %{with python3}
 %package -n python3-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
 Requires:       python3-mimeparse
@@ -80,14 +83,14 @@ possible while remaining highly effective.
 
 %build
 %{py2_build}
-%if 0%{?with_python3}
+%if %{with python3}
 %{py3_build}
 %endif
 
 
 %install
 %{py2_install}
-%if 0%{?with_python3}
+%if %{with python3}
 %{py3_install}
 %endif
 
@@ -97,7 +100,7 @@ rm -f %{buildroot}/%{_bindir}/falcon-bench
 
 %check
 nosetests-%{python2_version}
-%if 0%{?with_python3}
+%if %{with python3}
 nosetests-%{python3_version}
 %endif
 
@@ -107,7 +110,7 @@ nosetests-%{python3_version}
 %{python2_sitearch}/falcon*
 
 
-%if 0%{?with_python3}
+%if %{with python3}
 %files -n python3-falcon
 %doc README.rst
 %{python3_sitearch}/falcon*
@@ -117,6 +120,7 @@ nosetests-%{python3_version}
 %changelog
 * Sat Dec 05 2015 Carl George <carl.george@rackspace.com> - 0.3.0-4
 - Specify minimum version of python-six
+- Change python3 control macros to a bcond macro
 
 * Mon Nov 16 2015 Carl George <carl.george@rackspace.com> - 0.3.0-3
 - Add patch to disable coverage
