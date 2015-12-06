@@ -3,6 +3,10 @@
 %global _docdir_fmt %{name}
 %endif
 
+%if 0%{?fedora} >= 23
+%bcond_without python2_dependency_names
+%endif
+
 Name:           python-falcon
 Version:        0.3.0
 Release:        4%{?dist}
@@ -17,6 +21,7 @@ Patch002:       002-fix_test_cookies.patch
 # https://github.com/falconry/falcon/issues/654
 Patch003:       003-skip_test_request_cookie_parsing.patch
 
+%if %{with python2_dependency_names}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-ddt
@@ -25,6 +30,16 @@ BuildRequires:  python2-requests
 BuildRequires:  python2-six >= 1.4.0
 BuildRequires:  python2-testtools
 BuildRequires:  python2-yaml
+%else
+BuildRequires:  python-devel
+BuildRequires:  python-setuptools
+BuildRequires:  python-ddt
+BuildRequires:  python-nose
+BuildRequires:  python-requests
+BuildRequires:  python-six >= 1.4.0
+BuildRequires:  python-testtools
+BuildRequires:  python-yaml
+%endif
 BuildRequires:  Cython
 
 %if %{with python3}
@@ -48,8 +63,13 @@ possible while remaining highly effective.
 
 %package -n python2-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
+%if %{with python2_dependency_names}
 Requires:       python2-mimeparse
 Requires:       python2-six >= 1.4.0
+%else
+Requires:       python-mimeparse
+Requires:       python-six >= 1.4.0
+%endif
 %{?python_provide:%python_provide python2-falcon}
 
 
@@ -121,6 +141,7 @@ nosetests-%{python3_version}
 * Sat Dec 05 2015 Carl George <carl.george@rackspace.com> - 0.3.0-4
 - Specify minimum version of python-six
 - Change python3 control macros to a bcond macro
+- Add bcond macro to optionally require explicit python2 names
 
 * Mon Nov 16 2015 Carl George <carl.george@rackspace.com> - 0.3.0-3
 - Add patch to disable coverage
