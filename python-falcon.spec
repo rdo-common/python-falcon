@@ -5,7 +5,7 @@
 
 Name:           python-falcon
 Version:        0.3.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 License:        ASL 2.0
 URL:            http://falconframework.org
@@ -22,7 +22,7 @@ BuildRequires:  python2-setuptools
 BuildRequires:  python2-ddt
 BuildRequires:  python2-nose
 BuildRequires:  python2-requests
-BuildRequires:  python2-six
+BuildRequires:  python2-six >= 1.4.0
 BuildRequires:  python2-testtools
 BuildRequires:  python2-yaml
 BuildRequires:  Cython
@@ -46,7 +46,7 @@ possible while remaining highly effective.
 %package -n python2-falcon
 Summary:        A supersonic micro-framework for building cloud APIs
 Requires:       python2-mimeparse
-Requires:       python2-six
+Requires:       python2-six >= 1.4.0
 %{?python_provide:%python_provide python2-falcon}
 
 
@@ -115,6 +115,9 @@ nosetests-%{python3_version}
 
 
 %changelog
+* Sat Dec 05 2015 Carl George <carl.george@rackspace.com> - 0.3.0-4
+- Specify minimum version of python-six
+
 * Mon Nov 16 2015 Carl George <carl.george@rackspace.com> - 0.3.0-3
 - Add patch to disable coverage
 - Add patch to skip test_request_cookie_parsing on Python 3.5
