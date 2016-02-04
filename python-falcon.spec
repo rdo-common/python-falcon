@@ -9,7 +9,7 @@
 
 Name:           python-falcon
 Version:        0.3.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 License:        ASL 2.0
 URL:            http://falconframework.org
@@ -138,6 +138,9 @@ nosetests-%{python3_version}
 
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.3.0-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Sat Dec 05 2015 Carl George <carl.george@rackspace.com> - 0.3.0-4
 - Specify minimum version of python-six
 - Change python3 control macros to a bcond macro
