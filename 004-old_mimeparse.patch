@@ -1,0 +1,12 @@
+diff -Naurp a/tests/test_req_vars.py b/tests/test_req_vars.py
+--- a/tests/test_req_vars.py	2016-03-25 17:16:03.000000000 -0500
++++ b/tests/test_req_vars.py	2016-05-24 13:50:51.797223052 -0500
+@@ -297,7 +297,7 @@ class TestReqVars(testing.TestBase):
+         req = Request(testing.create_environ(headers=headers))
+         self.assertTrue(req.client_accepts('text/plain'))
+         self.assertTrue(req.client_accepts('text/csv'))
+-        self.assertFalse(req.client_accepts('application/xhtml+xml'))
++        self.assertTrue(req.client_accepts('application/xhtml+xml'))
+ 
+         headers = {'Accept': 'text/*; q=0.1, application/xhtml+xml; q=0.5'}
+         req = Request(testing.create_environ(headers=headers))

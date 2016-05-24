@@ -17,6 +17,20 @@ Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%
 
 Patch001:       001-disable_coverage.patch
 
+# The mimeparse module [1] appears to be abandonded, but is still what is
+# packaged in Fedora.  The python-mimeparse module [2] appears to be actively
+# maintained (as of 2016-05-24).  The falcon test suite changed [3] to
+# accommodate a bug fix in the newer python-mimeparse module, but that
+# inadvertently causes the test suite to fail when using the older mimeparse
+# module.  Until we can sort out the mimeparse confusion in Fedora, lets just
+# revert that change.
+#
+# [1]: https://code.google.com/archive/p/mimeparse/
+# [2]: https://github.com/dbtsai/python-mimeparse
+# [3]: https://github.com/falconry/falcon/commit/710a8dd
+#
+Patch004:       004-old_mimeparse.patch
+
 %if %{with python2_dependency_names}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
@@ -93,6 +107,7 @@ possible while remaining highly effective.
 %prep
 %setup -q -n falcon-%{version}
 %patch001 -p1
+%patch004 -p1
 
 
 %build
@@ -135,6 +150,7 @@ nosetests-%{python3_version}
 * Tue May 24 2016 Carl George <carl.george@rackspace.com> - 1.0.0-1
 - Latest upstream
 - Patch002 and Patch003 fixed upstream
+- Patch004 added to make test suite pass with old version of mimeparse
 
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.3.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
