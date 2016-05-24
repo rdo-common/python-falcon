@@ -8,12 +8,12 @@
 %endif
 
 Name:           python-falcon
-Version:        0.3.0
-Release:        5%{?dist}
+Version:        1.0.0
+Release:        1%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 License:        ASL 2.0
 URL:            http://falconframework.org
-Source0:        https://pypi.python.org/packages/source/f/falcon/falcon-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
 Patch001:       001-disable_coverage.patch
 # https://github.com/falconry/falcon/pull/558
@@ -138,6 +138,9 @@ nosetests-%{python3_version}
 
 
 %changelog
+* Tue May 24 2016 Carl George <carl.george@rackspace.com> - 1.0.0-1
+- Latest upstream
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.3.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
