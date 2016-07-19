@@ -9,7 +9,7 @@
 
 Name:           python-falcon
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A supersonic micro-framework for building cloud APIs
 License:        ASL 2.0
 URL:            http://falconframework.org
@@ -147,6 +147,9 @@ nosetests-%{python3_version}
 
 
 %changelog
+* Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.0-2
+- https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
+
 * Tue May 24 2016 Carl George <carl.george@rackspace.com> - 1.0.0-1
 - Latest upstream
 - Patch002 and Patch003 fixed upstream
