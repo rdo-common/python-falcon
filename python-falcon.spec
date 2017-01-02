@@ -22,12 +22,13 @@ Patch001:       001-disable_coverage.patch
 # maintained (as of 2016-05-24).  The falcon test suite changed [3] to
 # accommodate a bug fix in the newer python-mimeparse module, but that
 # inadvertently causes the test suite to fail when using the older mimeparse
-# module.  Until we can sort out the mimeparse confusion in Fedora, lets just
-# revert that change.
+# module.  Until we can sort out the mimeparse confusion in Fedora [4], lets
+# just revert that change.
 #
 # [1]: https://code.google.com/archive/p/mimeparse/
 # [2]: https://github.com/dbtsai/python-mimeparse
 # [3]: https://github.com/falconry/falcon/commit/710a8dd
+# [4]: https://bugzilla.redhat.com/show_bug.cgi?id=1339379
 #
 Patch004:       004-old_mimeparse.patch
 
