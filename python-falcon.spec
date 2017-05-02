@@ -10,6 +10,7 @@ Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
 Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
+Patch005:       005-versioned-console-scripts.patch
 
 
 %description
@@ -86,13 +87,10 @@ possible while remaining highly effective.
 
 
 %install
-%{py2_install}
 %if %{with python3}
 %{py3_install}
 %endif
-
-# don't package the benchmark test
-rm -f %{buildroot}/%{_bindir}/falcon-bench
+%{py2_install}
 
 
 %check
@@ -117,6 +115,7 @@ pytest-%{python2_version} tests
 - Latest upstream
 - Switch from nosetests to pytest
 - Require mimeparse >= 1.5.2 (related rhbz#1339379)
+- Add Patch005 to create versioned scripts
 
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild

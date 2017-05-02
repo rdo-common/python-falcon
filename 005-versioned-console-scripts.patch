@@ -1,0 +1,16 @@
+diff -Naurp a/setup.py b/setup.py
+--- a/setup.py	2017-01-27 15:01:27.000000000 -0600
++++ b/setup.py	2017-05-02 14:33:33.796533816 -0500
+@@ -111,7 +111,11 @@ setup(
+     entry_points={
+         'console_scripts': [
+             'falcon-bench = falcon.cmd.bench:main',
+-            'falcon-print-routes = falcon.cmd.print_routes:main'
++            'falcon-bench-{} = falcon.cmd.bench:main'.format(sys.version_info.major),
++            'falcon-bench-{}.{} = falcon.cmd.bench:main'.format(sys.version_info.major, sys.version_info.minor),
++            'falcon-print-routes = falcon.cmd.print_routes:main',
++            'falcon-print-routes-{} = falcon.cmd.print_routes:main'.format(sys.version_info.major),
++            'falcon-print-routes-{}.{} = falcon.cmd.print_routes:main'.format(sys.version_info.major, sys.version_info.minor)
+         ]
+     }
+ )
