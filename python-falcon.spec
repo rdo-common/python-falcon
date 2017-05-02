@@ -99,14 +99,26 @@ pytest-%{python2_version} tests
 
 
 %files -n python2-falcon
+%license LICENSE
 %doc README.rst
 %{python2_sitearch}/falcon*
+%{_bindir}/falcon-bench
+%{_bindir}/falcon-bench-2
+%{_bindir}/falcon-bench-%{python2_version}
+%{_bindir}/falcon-print-routes
+%{_bindir}/falcon-print-routes-2
+%{_bindir}/falcon-print-routes-%{python2_version}
 
 
 %if %{with python3}
 %files -n python3-falcon
+%license LICENSE
 %doc README.rst
 %{python3_sitearch}/falcon*
+%{_bindir}/falcon-bench-3
+%{_bindir}/falcon-bench-%{python3_version}
+%{_bindir}/falcon-print-routes-3
+%{_bindir}/falcon-print-routes-%{python3_version}
 %endif
 
 
@@ -116,6 +128,7 @@ pytest-%{python2_version} tests
 - Switch from nosetests to pytest
 - Require mimeparse >= 1.5.2 (related rhbz#1339379)
 - Add Patch005 to create versioned scripts
+- Include LICENSE
 
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
