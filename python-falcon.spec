@@ -3,16 +3,12 @@
 %global _docdir_fmt %{name}
 %endif
 
-%if 0%{?fedora} >= 23
-%bcond_without python2_dependency_names
-%endif
-
 Name:           python-falcon
 Version:        1.2.0
 Release:        1%{?dist}
-Summary:        A supersonic micro-framework for building cloud APIs
+Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
-URL:            http://falconframework.org
+URL:            https://falconframework.org
 Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
 Patch001:       001-disable_coverage.patch
@@ -32,39 +28,6 @@ Patch001:       001-disable_coverage.patch
 #
 Patch004:       004-old_mimeparse.patch
 
-%if %{with python2_dependency_names}
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-ddt
-BuildRequires:  python2-nose
-BuildRequires:  python2-requests
-BuildRequires:  python2-six >= 1.4.0
-BuildRequires:  python2-testtools
-BuildRequires:  python2-yaml
-%else
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
-BuildRequires:  python-ddt
-BuildRequires:  python-nose
-BuildRequires:  python-requests
-BuildRequires:  python-six >= 1.4.0
-BuildRequires:  python-testtools
-BuildRequires:  python-yaml
-%endif
-BuildRequires:  Cython
-
-%if %{with python3}
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-ddt
-BuildRequires:  python3-nose
-BuildRequires:  python3-requests
-BuildRequires:  python3-six
-BuildRequires:  python3-testtools
-BuildRequires:  python3-PyYAML
-BuildRequires:  python3-Cython
-%endif
-
 
 %description
 Falcon is a high-performance Python framework for building cloud APIs.
@@ -73,15 +36,23 @@ possible while remaining highly effective.
 
 
 %package -n python2-falcon
-Summary:        A supersonic micro-framework for building cloud APIs
-%if %{with python2_dependency_names}
-Requires:       python2-mimeparse
-Requires:       python2-six >= 1.4.0
-%else
-Requires:       python-mimeparse
-Requires:       python-six >= 1.4.0
-%endif
-%{?python_provide:%python_provide python2-falcon}
+Summary:        %{summary}
+# build
+BuildRequires:  python2-devel
+BuildRequires:  python%{?fedora:2}-setuptools
+BuildRequires:  %{?fedora:python2-}Cython
+# tests
+BuildRequires:  python2-ddt
+BuildRequires:  python2-mimeparse
+BuildRequires:  python%{?fedora:2}-nose
+BuildRequires:  python%{?fedora:2}-requests
+BuildRequires:  python%{?fedora:2}-six >= 1.4.0
+BuildRequires:  python%{?feodra:2}-testtools
+BuildRequires:  python%{?fedora:2}-yaml
+# runtime
+Requires:       python%{?fedora:2}-mimeparse
+Requires:       python%{?fedora:2}-six >= 1.4.0
+%{?python_provide:%python_provide python2-%{srcname}}
 
 
 %description -n python2-falcon
@@ -92,10 +63,23 @@ possible while remaining highly effective.
 
 %if %{with python3}
 %package -n python3-falcon
-Summary:        A supersonic micro-framework for building cloud APIs
+Summary:        %{summary}
+# build
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-Cython
+# tests
+BuildRequires:  python3-ddt
+BuildRequires:  python3-mimeparse
+BuildRequires:  python3-nose
+BuildRequires:  python3-requests
+BuildRequires:  python3-six >= 1.4.0
+BuildRequires:  python3-testtools
+BuildRequires:  python3-yaml
+# runtime
 Requires:       python3-mimeparse
-Requires:       python3-six
-%{?python_provide:%python_provide python3-falcon}
+Requires:       python3-six >= 1.4.0
+%{?python_provide:%python_provide python3-%{srcname}}
 
 
 %description -n python3-falcon
@@ -106,9 +90,7 @@ possible while remaining highly effective.
 
 
 %prep
-%setup -q -n falcon-%{version}
-%patch001 -p1
-%patch004 -p1
+%autosetup -p 1 -n falcon-%{version}
 
 
 %build
