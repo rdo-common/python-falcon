@@ -11,21 +11,6 @@ License:        ASL 2.0
 URL:            https://falconframework.org
 Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
-# The mimeparse module [1] appears to be abandonded, but is still what is
-# packaged in Fedora.  The python-mimeparse module [2] appears to be actively
-# maintained (as of 2016-05-24).  The falcon test suite changed [3] to
-# accommodate a bug fix in the newer python-mimeparse module, but that
-# inadvertently causes the test suite to fail when using the older mimeparse
-# module.  Until we can sort out the mimeparse confusion in Fedora [4], lets
-# just revert that change.
-#
-# [1]: https://code.google.com/archive/p/mimeparse/
-# [2]: https://github.com/dbtsai/python-mimeparse
-# [3]: https://github.com/falconry/falcon/commit/710a8dd
-# [4]: https://bugzilla.redhat.com/show_bug.cgi?id=1339379
-#
-Patch004:       004-old_mimeparse.patch
-
 
 %description
 Falcon is a high-performance Python framework for building cloud APIs.
@@ -41,7 +26,7 @@ BuildRequires:  python%{?fedora:2}-setuptools
 BuildRequires:  %{?fedora:python2-}Cython
 # tests
 BuildRequires:  python2-ddt
-BuildRequires:  python2-mimeparse
+BuildRequires:  python2-mimeparse >= 1.5.2
 BuildRequires:  %{?fedora:python2-}pytest >= 3.0.1
 BuildRequires:  python2-pytest-xdist
 BuildRequires:  python%{?fedora:2}-requests
@@ -49,7 +34,7 @@ BuildRequires:  python%{?fedora:2}-six >= 1.4.0
 BuildRequires:  python%{?feodra:2}-testtools
 BuildRequires:  python%{?fedora:2}-yaml
 # runtime
-Requires:       python%{?fedora:2}-mimeparse
+Requires:       python%{?fedora:2}-mimeparse >= 1.5.2
 Requires:       python%{?fedora:2}-six >= 1.4.0
 %{?python_provide:%python_provide python2-%{srcname}}
 
@@ -69,7 +54,7 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-Cython
 # tests
 BuildRequires:  python3-ddt
-BuildRequires:  python3-mimeparse
+BuildRequires:  python3-mimeparse >= 1.5.2
 BuildRequires:  python3-pytest >= 3.0.1
 BuildRequires:  python3-pytest-xdist
 BuildRequires:  python3-requests
@@ -77,7 +62,7 @@ BuildRequires:  python3-six >= 1.4.0
 BuildRequires:  python3-testtools
 BuildRequires:  python3-yaml
 # runtime
-Requires:       python3-mimeparse
+Requires:       python3-mimeparse >= 1.5.2
 Requires:       python3-six >= 1.4.0
 %{?python_provide:%python_provide python3-%{srcname}}
 
@@ -131,6 +116,7 @@ pytest-%{python2_version} tests
 * Tue May 02 2017 Carl George <carl.george@rackspace.com> - 1.2.0-1
 - Latest upstream
 - Switch from nosetests to pytest
+- Require mimeparse >= 1.5.2 (related rhbz#1339379)
 
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
