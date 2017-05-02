@@ -11,8 +11,6 @@ License:        ASL 2.0
 URL:            https://falconframework.org
 Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 
-Patch001:       001-disable_coverage.patch
-
 # The mimeparse module [1] appears to be abandonded, but is still what is
 # packaged in Fedora.  The python-mimeparse module [2] appears to be actively
 # maintained (as of 2016-05-24).  The falcon test suite changed [3] to
@@ -44,7 +42,8 @@ BuildRequires:  %{?fedora:python2-}Cython
 # tests
 BuildRequires:  python2-ddt
 BuildRequires:  python2-mimeparse
-BuildRequires:  python%{?fedora:2}-nose
+BuildRequires:  %{?fedora:python2-}pytest >= 3.0.1
+BuildRequires:  python2-pytest-xdist
 BuildRequires:  python%{?fedora:2}-requests
 BuildRequires:  python%{?fedora:2}-six >= 1.4.0
 BuildRequires:  python%{?feodra:2}-testtools
@@ -71,7 +70,8 @@ BuildRequires:  python3-Cython
 # tests
 BuildRequires:  python3-ddt
 BuildRequires:  python3-mimeparse
-BuildRequires:  python3-nose
+BuildRequires:  python3-pytest >= 3.0.1
+BuildRequires:  python3-pytest-xdist
 BuildRequires:  python3-requests
 BuildRequires:  python3-six >= 1.4.0
 BuildRequires:  python3-testtools
@@ -111,10 +111,8 @@ rm -f %{buildroot}/%{_bindir}/falcon-bench
 
 
 %check
-nosetests-%{python2_version}
-%if %{with python3}
-nosetests-%{python3_version}
-%endif
+pytest-%{python2_version} tests
+%{?with_python3:pytest-%{python3_version} tests}
 
 
 %files -n python2-falcon
@@ -132,6 +130,7 @@ nosetests-%{python3_version}
 %changelog
 * Tue May 02 2017 Carl George <carl.george@rackspace.com> - 1.2.0-1
 - Latest upstream
+- Switch from nosetests to pytest
 
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
