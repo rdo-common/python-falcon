@@ -1,11 +1,8 @@
-%if 0%{?fedora}
-%bcond_without python3
-%global _docdir_fmt %{name}
-%endif
+%global srcname falcon
 
-Name:           python-falcon
+Name:           python-%{srcname}
 Version:        1.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -19,7 +16,7 @@ It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
 
 
-%package -n python2-falcon
+%package -n python2-%{srcname}
 Summary:        %{summary}
 # build
 BuildRequires:  python2-devel
@@ -40,14 +37,14 @@ Requires:       python%{?fedora:2}-six >= 1.4.0
 %{?python_provide:%python_provide python2-%{srcname}}
 
 
-%description -n python2-falcon
+%description -n python2-%{srcname}
 Falcon is a high-performance Python framework for building cloud APIs.
 It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
 
 
-%if %{with python3}
-%package -n python3-falcon
+%if 0%{?fedora}
+%package -n python3-%{srcname}
 Summary:        %{summary}
 # build
 BuildRequires:  python3-devel
@@ -68,7 +65,7 @@ Requires:       python3-six >= 1.4.0
 %{?python_provide:%python_provide python3-%{srcname}}
 
 
-%description -n python3-falcon
+%description -n python3-%{srcname}
 Falcon is a high-performance Python framework for building cloud APIs.
 It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
@@ -76,29 +73,25 @@ possible while remaining highly effective.
 
 
 %prep
-%autosetup -p 1 -n falcon-%{version}
+%autosetup -p 1 -n %{srcname}-%{version}
 
 
 %build
 %{py2_build}
-%if %{with python3}
-%{py3_build}
-%endif
+%{?fedora:%{py3_build}}
 
 
 %install
-%if %{with python3}
-%{py3_install}
-%endif
+%{?fedora:%{py3_install}}
 %{py2_install}
 
 
 %check
 pytest-%{python2_version} tests
-%{?with_python3:pytest-%{python3_version} tests}
+%{?fedora:pytest-%{python3_version} tests}
 
 
-%files -n python2-falcon
+%files -n python2-%{srcname}
 %license LICENSE
 %doc README.rst
 %{python2_sitearch}/falcon*
@@ -110,8 +103,8 @@ pytest-%{python2_version} tests
 %{_bindir}/falcon-print-routes-%{python2_version}
 
 
-%if %{with python3}
-%files -n python3-falcon
+%if 0%{?fedora}
+%files -n python3-%{srcname}
 %license LICENSE
 %doc README.rst
 %{python3_sitearch}/falcon*
@@ -123,6 +116,10 @@ pytest-%{python2_version} tests
 
 
 %changelog
+* Thu May 04 2017 Carl George <carl.george@rackspace.com> - 1.2.0-2
+- Spec file clean up
+- Fix rpmlint error caused by srcname being undefined
+
 * Tue May 02 2017 Carl George <carl.george@rackspace.com> - 1.2.0-1
 - Latest upstream
 - Switch from nosetests to pytest
