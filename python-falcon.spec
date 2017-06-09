@@ -1,8 +1,15 @@
+# F26 is the first version with pytest > 3
+%if 0%{?fedora} >= 26
+%bcond_without tests
+%else
+%bcond_with tests
+%endif
+
 %global srcname falcon
 
 Name:           python-%{srcname}
 Version:        1.2.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -22,6 +29,7 @@ Summary:        %{summary}
 BuildRequires:  python2-devel
 BuildRequires:  python%{?fedora:2}-setuptools
 BuildRequires:  %{?fedora:python2-}Cython
+%if %{with tests}
 # tests
 BuildRequires:  python2-ddt
 BuildRequires:  python2-mimeparse >= 1.5.2
@@ -31,6 +39,7 @@ BuildRequires:  python%{?fedora:2}-requests
 BuildRequires:  python%{?fedora:2}-six >= 1.4.0
 BuildRequires:  python%{?feodra:2}-testtools
 BuildRequires:  python%{?fedora:2}-yaml
+%endif
 # runtime
 Requires:       python%{?fedora:2}-mimeparse >= 1.5.2
 Requires:       python%{?fedora:2}-six >= 1.4.0
@@ -50,6 +59,7 @@ Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-Cython
+%if %{with tests}
 # tests
 BuildRequires:  python3-ddt
 BuildRequires:  python3-mimeparse >= 1.5.2
@@ -59,6 +69,7 @@ BuildRequires:  python3-requests
 BuildRequires:  python3-six >= 1.4.0
 BuildRequires:  python3-testtools
 BuildRequires:  python3-yaml
+%endif
 # runtime
 Requires:       python3-mimeparse >= 1.5.2
 Requires:       python3-six >= 1.4.0
@@ -87,8 +98,10 @@ possible while remaining highly effective.
 
 
 %check
+%if %{with tests}
 pytest-%{python2_version} tests
 %{?fedora:pytest-%{python3_version} tests}
+%endif
 
 
 %files -n python2-%{srcname}
@@ -116,6 +129,9 @@ pytest-%{python2_version} tests
 
 
 %changelog
+* Fri Jun 09 2017 Carl George <carl.george@rackspace.com> - 1.2.0-3
+- Only run test suite on F26+ due to pytest 3 requirement
+
 * Thu May 04 2017 Carl George <carl.george@rackspace.com> - 1.2.0-2
 - Spec file clean up
 - Fix rpmlint error caused by srcname being undefined
