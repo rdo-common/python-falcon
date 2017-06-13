@@ -9,12 +9,13 @@
 
 Name:           python-%{srcname}
 Version:        1.2.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
 Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
 Patch005:       005-versioned-console-scripts.patch
+Patch006:       006-skip-test_deprecated_decorator-koji.patch
 
 
 %description
@@ -129,6 +130,9 @@ pytest-%{python2_version} tests
 
 
 %changelog
+* Tue Jun 13 2017 Carl George <carl.george@rackspace.com> - 1.2.0-4
+- The test test_deprecated_decorator fails in Koji, add patch006 to skip
+
 * Fri Jun 09 2017 Carl George <carl.george@rackspace.com> - 1.2.0-3
 - Only run test suite on F26+ due to pytest 3 requirement
 
