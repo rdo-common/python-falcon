@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        1.2.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -130,6 +130,9 @@ pytest-%{python2_version} tests
 
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Tue Jun 13 2017 Carl George <carl.george@rackspace.com> - 1.2.0-4
 - The test test_deprecated_decorator fails in Koji, add patch006 to skip
 
