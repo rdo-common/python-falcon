@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        1.2.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -130,6 +130,9 @@ pytest-%{python2_version} tests
 
 
 %changelog
+* Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
