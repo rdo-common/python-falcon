@@ -51,34 +51,32 @@ It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
 
 
-%if 0%{?fedora}
-%package -n python3-%{srcname}
+%package -n python%{python3_pkgversion}-%{srcname}
 Summary:        %{summary}
 # build
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-BuildRequires:  python3-Cython
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-setuptools
+BuildRequires:  python%{python3_pkgversion}-Cython
 %if %{with tests}
 # tests
-BuildRequires:  python3-pytest >= 3.0.1
-BuildRequires:  python3-yaml
-BuildRequires:  python3-requests
-BuildRequires:  python3-six >= 1.4.0
-BuildRequires:  python3-testtools
-BuildRequires:  python3-msgpack
-BuildRequires:  python3-jsonschema
+BuildRequires:  python%{python3_pkgversion}-pytest >= 3.0.1
+BuildRequires:  python%{python3_pkgversion}-yaml
+BuildRequires:  python%{python3_pkgversion}-requests
+BuildRequires:  python%{python3_pkgversion}-six >= 1.4.0
+BuildRequires:  python%{python3_pkgversion}-testtools
+BuildRequires:  python%{python3_pkgversion}-msgpack
+BuildRequires:  python%{python3_pkgversion}-jsonschema
 %endif
 # runtime
-Requires:       python3-six >= 1.4.0
-Requires:       python3-mimeparse >= 1.5.2
-%{?python_provide:%python_provide python3-%{srcname}}
+Requires:       python%{python3_pkgversion}-six >= 1.4.0
+Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
 
 
-%description -n python3-%{srcname}
+%description -n python%{python3_pkgversion}-%{srcname}
 Falcon is a high-performance Python framework for building cloud APIs.
 It encourages the REST architectural style, and tries to do as little as
 possible while remaining highly effective.
-%endif
 
 
 %prep
@@ -86,19 +84,19 @@ possible while remaining highly effective.
 
 
 %build
-%{py2_build}
-%{?fedora:%{py3_build}}
+%py2_build
+%py3_build
 
 
 %install
-%{?fedora:%{py3_install}}
-%{py2_install}
+%py3_install
+%py2_install
 
 
-%check
 %if %{with tests}
+%check
 pytest-%{python2_version} tests
-%{?fedora:pytest-%{python3_version} tests}
+pytest-%{python3_version} tests
 %endif
 
 
@@ -114,8 +112,7 @@ pytest-%{python2_version} tests
 %{_bindir}/falcon-print-routes-%{python2_version}
 
 
-%if 0%{?fedora}
-%files -n python3-%{srcname}
+%files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc README.rst
 %{python3_sitearch}/falcon*
@@ -123,12 +120,12 @@ pytest-%{python2_version} tests
 %{_bindir}/falcon-bench-%{python3_version}
 %{_bindir}/falcon-print-routes-3
 %{_bindir}/falcon-print-routes-%{python3_version}
-%endif
 
 
 %changelog
 * Thu Sep 07 2017 Carl George <carl@george.computer> - 1.3.0-1
 - Latest upstream
+- Enable python34 EPEL subpackage
 
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
