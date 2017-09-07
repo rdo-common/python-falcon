@@ -8,14 +8,13 @@
 %global srcname falcon
 
 Name:           python-%{srcname}
-Version:        1.2.0
-Release:        6%{?dist}
+Version:        1.3.0
+Release:        1%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
-Source0:        https://files.pythonhosted.org/packages/source/f/falcon/falcon-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/%(cut -c1 <<< %{srcname})/%{srcname}/%{srcname}-%{version}.tar.gz
 Patch005:       005-versioned-console-scripts.patch
-Patch006:       006-skip-test_deprecated_decorator-koji.patch
 
 
 %description
@@ -32,18 +31,17 @@ BuildRequires:  python%{?fedora:2}-setuptools
 BuildRequires:  %{?fedora:python2-}Cython
 %if %{with tests}
 # tests
-BuildRequires:  python2-ddt
-BuildRequires:  python2-mimeparse >= 1.5.2
 BuildRequires:  %{?fedora:python2-}pytest >= 3.0.1
-BuildRequires:  python2-pytest-xdist
+BuildRequires:  python%{?fedora:2}-yaml
 BuildRequires:  python%{?fedora:2}-requests
 BuildRequires:  python%{?fedora:2}-six >= 1.4.0
 BuildRequires:  python%{?feodra:2}-testtools
-BuildRequires:  python%{?fedora:2}-yaml
+BuildRequires:  python2-msgpack
+BuildRequires:  python2-jsonschema
 %endif
 # runtime
-Requires:       python%{?fedora:2}-mimeparse >= 1.5.2
 Requires:       python%{?fedora:2}-six >= 1.4.0
+Requires:       python2-mimeparse >= 1.5.2
 %{?python_provide:%python_provide python2-%{srcname}}
 
 
@@ -62,18 +60,17 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-Cython
 %if %{with tests}
 # tests
-BuildRequires:  python3-ddt
-BuildRequires:  python3-mimeparse >= 1.5.2
 BuildRequires:  python3-pytest >= 3.0.1
-BuildRequires:  python3-pytest-xdist
+BuildRequires:  python3-yaml
 BuildRequires:  python3-requests
 BuildRequires:  python3-six >= 1.4.0
 BuildRequires:  python3-testtools
-BuildRequires:  python3-yaml
+BuildRequires:  python3-msgpack
+BuildRequires:  python3-jsonschema
 %endif
 # runtime
-Requires:       python3-mimeparse >= 1.5.2
 Requires:       python3-six >= 1.4.0
+Requires:       python3-mimeparse >= 1.5.2
 %{?python_provide:%python_provide python3-%{srcname}}
 
 
@@ -130,6 +127,9 @@ pytest-%{python2_version} tests
 
 
 %changelog
+* Thu Sep 07 2017 Carl George <carl@george.computer> - 1.3.0-1
+- Latest upstream
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
