@@ -8,7 +8,7 @@
 %global srcname falcon
 
 Name:           python-%{srcname}
-Version:        1.3.0
+Version:        1.4.0
 Release:        1%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
@@ -42,6 +42,7 @@ BuildRequires:  python2-jsonschema
 # runtime
 Requires:       python%{?fedora:2}-six >= 1.4.0
 Requires:       python2-mimeparse >= 1.5.2
+%{?fedora:Recommends: python2-ujson}
 %{?python_provide:%python_provide python2-%{srcname}}
 
 
@@ -70,6 +71,7 @@ BuildRequires:  python%{python3_pkgversion}-jsonschema
 # runtime
 Requires:       python%{python3_pkgversion}-six >= 1.4.0
 Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
+%{?fedora:Recommends: python3-ujson}
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
 
 
@@ -123,6 +125,10 @@ pytest-%{python3_version} tests
 
 
 %changelog
+* Tue Jan 16 2018 Carl George <carl@george.computer> - 1.4.0-1
+- Latest upstream rhbz#1528076
+- Recommend ujson on Fedora
+
 * Thu Sep 07 2017 Carl George <carl@george.computer> - 1.3.0-1
 - Latest upstream
 - Enable python34 EPEL subpackage
