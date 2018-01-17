@@ -8,7 +8,7 @@
 %global srcname falcon
 
 Name:           python-%{srcname}
-Version:        1.4.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
@@ -125,6 +125,9 @@ pytest-%{python3_version} tests
 
 
 %changelog
+* Wed Jan 17 2018 Carl George <carl@george.computer> - 1.4.1-1
+- Latest upstream rhbz#1535255
+
 * Tue Jan 16 2018 Carl George <carl@george.computer> - 1.4.0-1
 - Latest upstream rhbz#1528076
 - Recommend ujson on Fedora
