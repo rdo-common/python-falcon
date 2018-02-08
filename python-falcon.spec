@@ -35,7 +35,7 @@ BuildRequires:  %{?fedora:python2-}pytest >= 3.0.1
 BuildRequires:  python%{?fedora:2}-yaml
 BuildRequires:  python%{?fedora:2}-requests
 BuildRequires:  python%{?fedora:2}-six >= 1.4.0
-BuildRequires:  python%{?feodra:2}-testtools
+BuildRequires:  python%{?fedora:2}-testtools
 BuildRequires:  python2-msgpack
 BuildRequires:  python2-jsonschema
 %endif
