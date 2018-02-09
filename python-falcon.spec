@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        1.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -125,6 +125,9 @@ pytest-%{python3_version} tests
 
 
 %changelog
+* Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Wed Jan 17 2018 Carl George <carl@george.computer> - 1.4.1-1
 - Latest upstream rhbz#1535255
 
