@@ -9,12 +9,13 @@
 
 Name:           python-%{srcname}
 Version:        1.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
 Source0:        https://files.pythonhosted.org/packages/source/%(cut -c1 <<< %{srcname})/%{srcname}/%{srcname}-%{version}.tar.gz
 Patch005:       005-versioned-console-scripts.patch
+BuildRequires:  gcc
 
 
 %description
@@ -125,6 +126,9 @@ pytest-%{python3_version} tests
 
 
 %changelog
+* Mon Feb 26 2018 Carl George <carl@george.computer> - 1.4.1-3
+- Add BuildRequires for gcc
+
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
