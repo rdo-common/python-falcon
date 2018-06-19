@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        1.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -126,6 +126,9 @@ pytest-%{python3_version} tests
 
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 1.4.1-4
+- Rebuilt for Python 3.7
+
 * Mon Feb 26 2018 Carl George <carl@george.computer> - 1.4.1-3
 - Add BuildRequires for gcc
 
