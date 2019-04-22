@@ -19,10 +19,15 @@ while remaining highly effective.}
 %bcond_with     tests
 %endif
 
+%bcond_without  python3
+
+%if (%{defined fedora} && 0%{?fedora} < 31) || (%{defined rhel} && 0%{?rhel} < 8)
+%bcond_without  python2
+%endif
 
 Name:           python-%{pkgname}
 Version:        1.4.1
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
@@ -34,6 +39,7 @@ BuildRequires:  gcc
 %description %{common_description}
 
 
+%if %{with python2}
 %package -n python2-%{pkgname}
 Summary:        %{summary}
 # build
@@ -58,8 +64,10 @@ Requires:       python2-mimeparse >= 1.5.2
 
 
 %description -n python2-%{pkgname} %{common_description}
+%endif
 
 
+%if %{with python3}
 %package -n python%{python3_pkgversion}-%{pkgname}
 Summary:        %{summary}
 # build
@@ -84,6 +92,7 @@ Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
 
 
 %description -n python%{python3_pkgversion}-%{pkgname} %{common_description}
+%endif
 
 
 %prep
@@ -91,22 +100,23 @@ Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
 
 
 %build
-%py2_build
-%py3_build
+%{?with_python2:%py2_build}
+%{?with_python3:%py3_build}
 
 
 %install
-%py3_install
-%py2_install
+%{?with_python3:%py3_install}
+%{?with_python2:%py2_install}
 
 
 %if %{with tests}
 %check
-pytest-%{python2_version} tests
-pytest-%{python3_version} tests
+%{?with_python2:pytest-%{python2_version} tests}
+%{?with_python3:pytest-%{python3_version} tests}
 %endif
 
 
+%if %{with python2}
 %files -n python2-%{pkgname}
 %license LICENSE
 %doc README.rst
@@ -118,20 +128,28 @@ pytest-%{python3_version} tests
 %{_bindir}/falcon-print-routes
 %{_bindir}/falcon-print-routes-2
 %{_bindir}/falcon-print-routes-%{python2_version}
+%endif
 
 
+%if %{with python3}
 %files -n python%{python3_pkgversion}-%{pkgname}
 %license LICENSE
 %doc README.rst
 %{python3_sitearch}/%{libname}
 %{python3_sitearch}/%{eggname}-%{version}-py%{python3_version}.egg-info
+%{!?with_python2:%{_bindir}/falcon-bench}
 %{_bindir}/falcon-bench-3
 %{_bindir}/falcon-bench-%{python3_version}
+%{!?with_python2:%{_bindir}/falcon-print-routes}
 %{_bindir}/falcon-print-routes-3
 %{_bindir}/falcon-print-routes-%{python3_version}
+%endif
 
 
 %changelog
+* Mon Apr 22 2019 Carl George <carl@george.computer> - 1.4.1-7
+- Disable python2 subpackage on Fedora 31+ rhbz#1701670
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.1-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
