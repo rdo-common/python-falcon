@@ -97,6 +97,7 @@ Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
 
 %prep
 %autosetup -p 1 -n %{srcname}-%{version}
+rm -rf %{eggname}.egg-info
 
 
 %build
