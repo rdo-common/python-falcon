@@ -1,3 +1,12 @@
+# what it's called on pypi
+%global srcname falcon
+# what it's imported as
+%global libname %{srcname}
+# name of egg info directory
+%global eggname %{srcname}
+# package name fragment
+%global pkgname %{srcname}
+
 %global common_description %{expand:
 Falcon is a high-performance Python framework for building cloud APIs.  It
 encourages the REST architectural style, and tries to do as little as possible
@@ -5,20 +14,19 @@ while remaining highly effective.}
 
 # F26 is the first version with pytest > 3
 %if 0%{?fedora} >= 26
-%bcond_without tests
+%bcond_without  tests
 %else
-%bcond_with tests
+%bcond_with     tests
 %endif
 
-%global srcname falcon
 
-Name:           python-%{srcname}
+Name:           python-%{pkgname}
 Version:        1.4.1
 Release:        6%{?dist}
 Summary:        An unladen web framework for building APIs and app backends
 License:        ASL 2.0
 URL:            https://falconframework.org
-Source0:        https://files.pythonhosted.org/packages/source/%(cut -c1 <<< %{srcname})/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0:        %pypi_source
 Patch005:       005-versioned-console-scripts.patch
 BuildRequires:  gcc
 
@@ -26,33 +34,33 @@ BuildRequires:  gcc
 %description %{common_description}
 
 
-%package -n python2-%{srcname}
+%package -n python2-%{pkgname}
 Summary:        %{summary}
 # build
 BuildRequires:  python2-devel
-BuildRequires:  python%{?fedora:2}-setuptools
-BuildRequires:  %{?fedora:python2-}Cython
+BuildRequires:  python2-setuptools
+BuildRequires:  python2-Cython
 %if %{with tests}
 # tests
-BuildRequires:  %{?fedora:python2-}pytest >= 3.0.1
+BuildRequires:  python2-pytest >= 3.0.1
 BuildRequires:  python%{?fedora:2}-yaml
-BuildRequires:  python%{?fedora:2}-requests
-BuildRequires:  python%{?fedora:2}-six >= 1.4.0
+BuildRequires:  python2-requests
+BuildRequires:  python2-six >= 1.4.0
 BuildRequires:  python%{?fedora:2}-testtools
 BuildRequires:  python2-msgpack
 BuildRequires:  python2-jsonschema
 %endif
 # runtime
-Requires:       python%{?fedora:2}-six >= 1.4.0
+Requires:       python2-six >= 1.4.0
 Requires:       python2-mimeparse >= 1.5.2
 %{?fedora:Recommends: python2-ujson}
-%{?python_provide:%python_provide python2-%{srcname}}
+%{?python_provide:%python_provide python2-%{pkgname}}
 
 
-%description -n python2-%{srcname} %{common_description}
+%description -n python2-%{pkgname} %{common_description}
 
 
-%package -n python%{python3_pkgversion}-%{srcname}
+%package -n python%{python3_pkgversion}-%{pkgname}
 Summary:        %{summary}
 # build
 BuildRequires:  python%{python3_pkgversion}-devel
@@ -72,10 +80,10 @@ BuildRequires:  python%{python3_pkgversion}-jsonschema
 Requires:       python%{python3_pkgversion}-six >= 1.4.0
 Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
 %{?fedora:Recommends: python3-ujson}
-%{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{pkgname}}
 
 
-%description -n python%{python3_pkgversion}-%{srcname} %{common_description}
+%description -n python%{python3_pkgversion}-%{pkgname} %{common_description}
 
 
 %prep
@@ -99,10 +107,11 @@ pytest-%{python3_version} tests
 %endif
 
 
-%files -n python2-%{srcname}
+%files -n python2-%{pkgname}
 %license LICENSE
 %doc README.rst
-%{python2_sitearch}/falcon*
+%{python2_sitearch}/%{libname}
+%{python2_sitearch}/%{eggname}-%{version}-py%{python2_version}.egg-info
 %{_bindir}/falcon-bench
 %{_bindir}/falcon-bench-2
 %{_bindir}/falcon-bench-%{python2_version}
@@ -111,10 +120,11 @@ pytest-%{python3_version} tests
 %{_bindir}/falcon-print-routes-%{python2_version}
 
 
-%files -n python%{python3_pkgversion}-%{srcname}
+%files -n python%{python3_pkgversion}-%{pkgname}
 %license LICENSE
 %doc README.rst
-%{python3_sitearch}/falcon*
+%{python3_sitearch}/%{libname}
+%{python3_sitearch}/%{eggname}-%{version}-py%{python3_version}.egg-info
 %{_bindir}/falcon-bench-3
 %{_bindir}/falcon-bench-%{python3_version}
 %{_bindir}/falcon-print-routes-3
