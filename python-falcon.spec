@@ -112,8 +112,8 @@ rm -rf %{eggname}.egg-info
 
 %if %{with tests}
 %check
-%{?with_python2:pytest-%{python2_version} tests}
-%{?with_python3:pytest-%{python3_version} tests}
+%{?with_python2:PYTHONPATH=%{buildroot}%{python2_sitearch} pytest-%{python2_version} tests}
+%{?with_python3:PYTHONPATH=%{buildroot}%{python3_sitearch} pytest-%{python3_version} tests}
 %endif
 
 
@@ -150,6 +150,7 @@ rm -rf %{eggname}.egg-info
 %changelog
 * Mon Apr 22 2019 Carl George <carl@george.computer> - 1.4.1-7
 - Disable python2 subpackage on Fedora 31+ rhbz#1701670
+- Run tests from buildroot, not builddir
 
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.1-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
