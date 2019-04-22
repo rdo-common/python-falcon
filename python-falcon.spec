@@ -1,3 +1,8 @@
+%global common_description %{expand:
+Falcon is a high-performance Python framework for building cloud APIs.  It
+encourages the REST architectural style, and tries to do as little as possible
+while remaining highly effective.}
+
 # F26 is the first version with pytest > 3
 %if 0%{?fedora} >= 26
 %bcond_without tests
@@ -18,10 +23,7 @@ Patch005:       005-versioned-console-scripts.patch
 BuildRequires:  gcc
 
 
-%description
-Falcon is a high-performance Python framework for building cloud APIs.
-It encourages the REST architectural style, and tries to do as little as
-possible while remaining highly effective.
+%description %{common_description}
 
 
 %package -n python2-%{srcname}
@@ -47,10 +49,7 @@ Requires:       python2-mimeparse >= 1.5.2
 %{?python_provide:%python_provide python2-%{srcname}}
 
 
-%description -n python2-%{srcname}
-Falcon is a high-performance Python framework for building cloud APIs.
-It encourages the REST architectural style, and tries to do as little as
-possible while remaining highly effective.
+%description -n python2-%{srcname} %{common_description}
 
 
 %package -n python%{python3_pkgversion}-%{srcname}
@@ -76,10 +75,7 @@ Requires:       python%{python3_pkgversion}-mimeparse >= 1.5.2
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
 
 
-%description -n python%{python3_pkgversion}-%{srcname}
-Falcon is a high-performance Python framework for building cloud APIs.
-It encourages the REST architectural style, and tries to do as little as
-possible while remaining highly effective.
+%description -n python%{python3_pkgversion}-%{srcname} %{common_description}
 
 
 %prep
